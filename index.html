@@ -11,7 +11,7 @@
   <meta property="og:type" content="website" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Caveat:wght@600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -103,6 +103,11 @@
     <div class="hero-scroll"><span></span></div>
   </section>
 
+  <!-- Torn-paper divider: hero → about -->
+  <div class="torn-divider torn-divider-down">
+    <svg viewBox="0 0 1200 60" preserveAspectRatio="none"><path d="M0,0 L0,40 Q40,55 90,38 T180,42 T280,30 T380,46 T480,28 T580,40 T680,32 T780,48 T880,30 T980,44 T1080,34 T1200,40 L1200,0 Z"/></svg>
+  </div>
+
   <!-- ══════════════════ ABOUT ══════════════════ -->
   <section class="about" id="about">
     <div class="container">
@@ -119,6 +124,7 @@
           </div>
         </div>
         <div class="about-text reveal from-right">
+          <span class="script-accent">Train different</span>
           <span class="sec-tag">About EliteForce</span>
           <h2 class="sec-title">We Don't Just Build <em>Bodies</em>.<br>We Build <em>Champions</em>.</h2>
           <p class="sec-body">EliteForce Fitness was founded with one mission — to give every person the tools, guidance, and environment to become the best version of themselves. With state-of-the-art equipment, certified trainers, and a community that pushes each other forward, we are the city's most trusted fitness destination.</p>
@@ -136,11 +142,16 @@
   </section>
 
   <!-- ══════════════════ WHY US ══════════════════ -->
-  <section class="why" id="why">
+  <!-- Torn-paper divider: about → why (dark to white) -->
+  <div class="torn-divider torn-divider-down torn-to-white">
+    <svg viewBox="0 0 1200 60" preserveAspectRatio="none"><path d="M0,0 L0,38 Q50,52 100,36 T200,44 T300,28 T400,46 T500,32 T600,42 T700,30 T800,44 T900,34 T1000,40 T1100,30 T1200,38 L1200,0 Z"/></svg>
+  </div>
+
+  <section class="why why-light" id="why">
     <div class="container">
       <div class="sec-center reveal">
-        <span class="sec-tag">Why Choose Us</span>
-        <h2 class="sec-title">Everything You Need to <em>Succeed</em></h2>
+        <span class="script-accent">Build your</span>
+        <h2 class="sec-title sec-title-dark">Everything You Need to <em>Succeed</em></h2>
       </div>
       <div class="why-grid">
         <div class="why-card reveal delay-1"><div class="wc-icon"><i class="fa-solid fa-dumbbell"></i></div><h3>Modern Equipment</h3><p>Top-of-the-line machines &amp; free weights for every muscle group and fitness goal.</p></div>
@@ -153,10 +164,16 @@
     </div>
   </section>
 
+  <!-- Torn-paper divider: why → programs (white to dark) -->
+  <div class="torn-divider torn-divider-up torn-to-dark">
+    <svg viewBox="0 0 1200 60" preserveAspectRatio="none"><path d="M0,60 L0,22 Q50,8 100,24 T200,16 T300,32 T400,14 T500,28 T600,18 T700,30 T800,16 T900,26 T1000,20 T1100,30 T1200,22 L1200,60 Z"/></svg>
+  </div>
+
   <!-- ══════════════════ PROGRAMS ══════════════════ -->
   <section class="programs" id="programs">
     <div class="container">
       <div class="sec-center reveal">
+        <span class="script-accent">Push your limits</span>
         <span class="sec-tag">Training Programs</span>
         <h2 class="sec-title">Find Your Perfect <em>Program</em></h2>
         <p class="sec-sub reveal delay-1">Whatever your goal, we have a program built for it — led by experts who care about your results.</p>
@@ -194,6 +211,7 @@
   <section class="membership" id="membership">
     <div class="container">
       <div class="sec-center reveal">
+        <span class="script-accent">Join the family</span>
         <span class="sec-tag">Membership Plans</span>
         <h2 class="sec-title">Invest in Your <em>Health</em> Today</h2>
         <p class="sec-sub reveal delay-1">Affordable plans with zero compromise on quality. Call us for the best pricing.</p>
@@ -367,11 +385,17 @@
     </div>
   </section>
 
+  <!-- Torn-paper divider into trial CTA -->
+  <div class="torn-divider torn-to-red">
+    <svg viewBox="0 0 1200 60" preserveAspectRatio="none"><path d="M0,0 L0,40 Q40,55 90,38 T180,42 T280,30 T380,46 T480,28 T580,40 T680,32 T780,48 T880,30 T980,44 T1080,34 T1200,40 L1200,0 Z"/></svg>
+  </div>
+
   <!-- ══════════════════ FREE TRIAL CTA ══════════════════ -->
   <section class="trial-cta">
     <div class="container">
       <div class="tc-inner reveal">
         <div class="tc-text">
+          <span class="script-accent script-accent-light">Get it now</span>
           <h2>Start Your <em>FREE Trial</em> Today</h2>
           <p>Walk in, feel the energy, and meet your trainer — absolutely free. No commitment needed.</p>
         </div>
@@ -382,6 +406,11 @@
       </div>
     </div>
   </section>
+
+  <!-- Torn-paper divider out of trial CTA -->
+  <div class="torn-divider torn-from-red">
+    <svg viewBox="0 0 1200 60" preserveAspectRatio="none"><path d="M0,60 L0,22 Q50,8 100,24 T200,16 T300,32 T400,14 T500,28 T600,18 T700,30 T800,16 T900,26 T1000,20 T1100,30 T1200,22 L1200,60 Z"/></svg>
+  </div>
 
   <!-- ══════════════════ CONTACT ══════════════════ -->
   <section class="contact" id="contact">

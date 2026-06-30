@@ -19,9 +19,12 @@
   --gray:      #888;
   --light:     #f0f0f0;
   --white:     #ffffff;
+  --paper:     #f7f5f1;
+  --paper-ink: #14141c;
   --fh: 'Bebas Neue', sans-serif;
   --fb: 'Rajdhani', sans-serif;
   --fi: 'Inter', sans-serif;
+  --fs: 'Caveat', cursive;
   --r-sm: 14px;
   --r-md: 18px;
   --r-lg: 24px;
@@ -64,6 +67,21 @@ button { cursor: pointer; font-family: var(--fb); }
   margin-bottom: 14px;
 }
 
+/* Script accent — handwritten brush-style tagline, sits above section eyebrow */
+.script-accent {
+  display: block;
+  font-family: var(--fs);
+  font-size: clamp(26px, 3vw, 34px);
+  font-weight: 700;
+  color: var(--red);
+  line-height: 1;
+  margin-bottom: 2px;
+  transform: rotate(-2deg);
+  transform-origin: left center;
+}
+.sec-center .script-accent { transform: rotate(-2deg) translateX(0); text-align: center; }
+.script-accent-light { color: #fff; }
+
 .sec-title {
   font-family: var(--fh);
   font-size: clamp(32px,4.5vw,54px);
@@ -72,6 +90,8 @@ button { cursor: pointer; font-family: var(--fb); }
   margin-bottom: 14px;
 }
 .sec-title em { color: var(--red); font-style: normal; }
+.sec-title-dark { color: var(--paper-ink); }
+.sec-title-dark em { color: var(--red); }
 
 .sec-body {
   font-size: 15px;
@@ -90,6 +110,47 @@ button { cursor: pointer; font-family: var(--fb); }
 
 .sec-center { text-align: center; margin-bottom: 52px; }
 .sec-center .sec-sub { margin-top: 10px; }
+
+/* ══════════════════════════════════════
+   TORN-PAPER DIVIDERS — signature element
+   Brush/torn edge between dark & white panels.
+   Base color = the section ABOVE the divider (what we're leaving).
+   Path fill   = the section BELOW the divider (what we're entering).
+══════════════════════════════════════ */
+.torn-divider {
+  position: relative;
+  width: 100%;
+  height: 44px;
+  line-height: 0;
+  margin: 0;
+  overflow: hidden;
+}
+.torn-divider svg {
+  width: 100%;
+  height: 60px;
+  display: block;
+}
+/* Default: dark hero -> dark about section */
+.torn-divider-down { background: var(--black); }
+.torn-divider-down svg path { fill: var(--dark); }
+.torn-divider-up   { background: var(--dark); }
+.torn-divider-up   svg path { fill: var(--dark2); }
+
+/* Dark above -> white panel below */
+.torn-to-white { background: var(--dark); }
+.torn-to-white svg path { fill: var(--paper); }
+
+/* White panel above -> dark below */
+.torn-to-dark { background: var(--paper); }
+.torn-to-dark svg path { fill: var(--dark); }
+
+/* Black above -> red trial-cta below */
+.torn-to-red { background: var(--black); }
+.torn-to-red svg path { fill: var(--red-dk); }
+
+/* Red trial-cta above -> dark contact below */
+.torn-from-red { background: var(--red-dk); }
+.torn-from-red svg path { fill: var(--dark); }
 
 /* ── Glass card mixin ── */
 .glass-card {
@@ -466,6 +527,32 @@ button { cursor: pointer; font-family: var(--fb); }
 .why-card:hover .wc-icon { background: rgba(227,28,28,0.2); }
 .why-card h3 { font-family: var(--fb); font-size: 19px; font-weight: 700; margin-bottom: 10px; }
 .why-card p { font-size: 14px; color: #777; line-height: 1.7; font-family: var(--fi); }
+
+/* ── White panel variant — complements dark theme (per reference design) ── */
+.why-light {
+  background: var(--paper);
+  padding: 70px 0;
+}
+.why-light .why-card {
+  background: #ffffff;
+  border: 1px solid rgba(20,20,28,0.08);
+  box-shadow: 0 2px 14px rgba(20,20,28,0.05);
+}
+.why-light .why-card:hover {
+  border-color: rgba(227,28,28,0.35);
+  background: #ffffff;
+  box-shadow: 0 16px 36px rgba(20,20,28,0.12);
+}
+.why-light .wc-icon {
+  background: rgba(227,28,28,0.08);
+  border: 1px solid rgba(227,28,28,0.18);
+}
+.why-light .why-card h3 { color: var(--paper-ink); }
+.why-light .why-card p  { color: #6b6b75; }
+.why-light .sec-tag {
+  background: rgba(227,28,28,0.08);
+  border-color: rgba(227,28,28,0.25);
+}
 
 /* ══════════════════════════════════════
    PROGRAMS
@@ -929,6 +1016,12 @@ button { cursor: pointer; font-family: var(--fb); }
   .nav-menu { display: none; }
   .nav-cta { display: none; }
   .hamburger { display: flex; }
+
+  /* New typography/divider elements — scale down on mobile */
+  .torn-divider { height: 26px; }
+  .torn-divider svg { height: 36px; }
+  .script-accent { font-size: 22px; margin-bottom: 0; }
+  .why-light { padding: 50px 0; }
 
   /* Hero — compact everything so the gym photo stays visible */
   .hero { min-height: 100vh; }
