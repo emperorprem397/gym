@@ -1,31 +1,39 @@
 /* =====================================================
-   ELITEFORCE FITNESS — main.js
+   ELITEFORCE FITNESS — main.js v2
+   Glassmorphic | Scroll Animations | Fixed Floats
 ===================================================== */
 
 /* ── NAVBAR SCROLL ── */
 const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
-  navbar.classList.toggle('scrolled', window.scrollY > 50);
-});
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
 
-/* ── HAMBURGER ── */
+/* ── HAMBURGER — mobile panel ── */
 const hamburger = document.getElementById('hamburger');
-const navMenu   = document.getElementById('navMenu');
+const mobilePanel = document.getElementById('mobilePanel');
 hamburger.addEventListener('click', () => {
   hamburger.classList.toggle('open');
-  navMenu.classList.toggle('open');
+  mobilePanel.classList.toggle('open');
 });
 document.querySelectorAll('.nm-link').forEach(link => {
   link.addEventListener('click', () => {
     hamburger.classList.remove('open');
-    navMenu.classList.remove('open');
+    mobilePanel.classList.remove('open');
   });
+});
+// Close on outside click
+document.addEventListener('click', (e) => {
+  if (!navbar.contains(e.target) && !mobilePanel.contains(e.target)) {
+    hamburger.classList.remove('open');
+    mobilePanel.classList.remove('open');
+  }
 });
 
 /* ── ACTIVE NAV LINK ── */
 const sections = document.querySelectorAll('section[id]');
-window.addEventListener('scroll', () => {
-  const scrollY = window.scrollY + 120;
+function updateActiveLink() {
+  const scrollY = window.scrollY + 130;
   sections.forEach(section => {
     const id   = section.getAttribute('id');
     const link = document.querySelector(`.nm-link[href="#${id}"]`);
@@ -34,30 +42,40 @@ window.addEventListener('scroll', () => {
     const height = section.offsetHeight;
     link.classList.toggle('active', scrollY >= top && scrollY < top + height);
   });
-});
+}
+window.addEventListener('scroll', updateActiveLink, { passive: true });
 
-/* ── REVEAL ON SCROLL ── */
-const revealEls = document.querySelectorAll('.reveal');
+/* ── SCROLL REVEAL — staggered per-section ── */
 const revealObs = new IntersectionObserver((entries) => {
-  entries.forEach((entry, i) => {
+  entries.forEach((entry) => {
     if (entry.isIntersecting) {
-      setTimeout(() => entry.target.classList.add('visible'), i * 60);
+      // Find siblings in same parent to stagger them
+      const siblings = Array.from(entry.target.parentElement.querySelectorAll('.reveal:not(.visible)'));
+      const idx = siblings.indexOf(entry.target);
+      const delay = Math.min(idx * 80, 400);
+      setTimeout(() => entry.target.classList.add('visible'), delay);
       revealObs.unobserve(entry.target);
     }
   });
-}, { threshold: 0.08 });
-revealEls.forEach(el => revealObs.observe(el));
+}, { threshold: 0.07, rootMargin: '0px 0px -30px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
 /* ── COUNTER ANIMATION ── */
 function animateCounter(el) {
-  const target = parseInt(el.dataset.target, 10);
+  const target   = parseInt(el.dataset.target, 10);
   const duration = 1800;
-  const step = target / (duration / 16);
+  const steps    = duration / 16;
+  const step     = target / steps;
   let current = 0;
   const timer = setInterval(() => {
     current += step;
-    if (current >= target) { el.textContent = target.toLocaleString(); clearInterval(timer); }
-    else { el.textContent = Math.floor(current).toLocaleString(); }
+    if (current >= target) {
+      el.textContent = target.toLocaleString();
+      clearInterval(timer);
+    } else {
+      el.textContent = Math.floor(current).toLocaleString();
+    }
   }, 16);
 }
 
@@ -69,7 +87,7 @@ const counterObs = new IntersectionObserver((entries) => {
       counterObs.unobserve(entry.target);
     }
   });
-}, { threshold: 0.5 });
+}, { threshold: 0.6 });
 counters.forEach(c => counterObs.observe(c));
 
 /* ── GALLERY LIGHTBOX ── */
@@ -100,12 +118,12 @@ document.getElementById('bmiCalc').addEventListener('click', () => {
   const weight = parseFloat(document.getElementById('bmiWeight').value);
 
   if (!height || !weight || height < 100 || weight < 20) {
-    alert('Please enter valid height and weight values.');
+    alert('Please enter valid height (cm) and weight (kg) values.');
     return;
   }
 
   const heightM = height / 100;
-  const bmi = (weight / (heightM * heightM)).toFixed(1);
+  const bmi     = (weight / (heightM * heightM)).toFixed(1);
 
   let label, advice, fillPercent, color;
 
@@ -123,15 +141,15 @@ document.getElementById('bmiCalc').addEventListener('click', () => {
     fillPercent = 55 + ((bmi - 25) / 5) * 20;
   } else {
     label = 'Obese'; color = '#e74c3c';
-    advice = '❤️ Don\'t worry — EliteForce trainers have helped hundreds of members successfully transform their health. Start with a FREE trial session, no commitment!';
+    advice = "❤️ Don't worry — EliteForce trainers have helped hundreds of members transform their health. Start with a FREE trial session — no commitment needed!";
     fillPercent = Math.min(90, 75 + ((bmi - 30) / 10) * 15);
   }
 
-  const resultEl  = document.getElementById('bmiResult');
-  const scoreEl   = document.getElementById('brScore');
-  const labelEl   = document.getElementById('brLabel');
-  const fillEl    = document.getElementById('brFill');
-  const adviceEl  = document.getElementById('brAdvice');
+  const resultEl = document.getElementById('bmiResult');
+  const scoreEl  = document.getElementById('brScore');
+  const labelEl  = document.getElementById('brLabel');
+  const fillEl   = document.getElementById('brFill');
+  const adviceEl = document.getElementById('brAdvice');
 
   scoreEl.textContent  = bmi;
   scoreEl.style.color  = color;
@@ -140,24 +158,26 @@ document.getElementById('bmiCalc').addEventListener('click', () => {
   adviceEl.textContent = advice;
 
   resultEl.style.display = 'block';
-  setTimeout(() => { fillEl.style.marginLeft = Math.min(96, fillPercent) + '%'; }, 100);
-  resultEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  setTimeout(() => { fillEl.style.marginLeft = Math.min(96, fillPercent) + '%'; }, 120);
+  setTimeout(() => { resultEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 200);
 });
 
-/* ── WHATSAPP FLOAT hide on top ── */
-window.addEventListener('scroll', () => {
-  const waFloat   = document.getElementById('waFloat');
-  const callFloat = document.getElementById('callFloat');
-  if (!waFloat) return;
-  if (window.scrollY < 300) {
-    waFloat.style.opacity   = '0';
-    waFloat.style.pointerEvents = 'none';
-    callFloat.style.opacity = '0';
-    callFloat.style.pointerEvents = 'none';
-  } else {
-    waFloat.style.opacity   = '1';
-    waFloat.style.pointerEvents = 'auto';
-    callFloat.style.opacity = '1';
-    callFloat.style.pointerEvents = 'auto';
-  }
-});
+/* ── FLOATING BUTTONS — show after scroll ── */
+const waFloat   = document.getElementById('waFloat');
+const callFloat = document.getElementById('callFloat');
+
+function updateFloats() {
+  const show = window.scrollY > 300;
+  waFloat.classList.toggle('show', show);
+  callFloat.classList.toggle('show', show);
+}
+window.addEventListener('scroll', updateFloats, { passive: true });
+updateFloats();
+
+/* ── SMOOTH SECTION ENTRY — add class when section visible ── */
+const sectionObs = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('in-view');
+  });
+}, { threshold: 0.05 });
+document.querySelectorAll('section').forEach(s => sectionObs.observe(s));
