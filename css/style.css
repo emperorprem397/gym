@@ -368,23 +368,6 @@ button { cursor: pointer; font-family: var(--fb); }
 @keyframes fadeDown  { from { opacity:0; transform:translateY(-14px); } to { opacity:1; transform:none; } }
 @keyframes scrollPulse { 0%,100%{opacity:.3;transform:scaleY(.6)} 50%{opacity:1;transform:scaleY(1)} }
 
-/* ══════════════════════════════════════
-   TICKER
-══════════════════════════════════════ */
-.ticker-wrap {
-  background: var(--red); overflow: hidden; padding: 12px 0;
-  white-space: nowrap;
-}
-.ticker-track {
-  display: inline-flex; animation: tickerScroll 30s linear infinite;
-}
-.ticker-track span {
-  display: inline-block; padding: 0 28px;
-  font-family: var(--fb); font-size: 14px; font-weight: 600;
-  color: #fff; letter-spacing: 0.5px;
-  border-right: 1px solid rgba(255,255,255,0.3);
-}
-@keyframes tickerScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
 /* ══════════════════════════════════════
    SECTIONS — glassmorphic containers
@@ -947,10 +930,20 @@ button { cursor: pointer; font-family: var(--fb); }
   .nav-cta { display: none; }
   .hamburger { display: flex; }
 
-  .hero-title { font-size: clamp(52px, 13vw, 80px); }
-  .hero-stats { flex-wrap: wrap; padding: 16px; justify-content: center; gap: 12px; }
+  /* Hero — compact everything so the gym photo stays visible */
+  .hero { min-height: 100vh; }
+  .hero-content { padding-top: 64px; }
+  .hero-badge { font-size: 10px; padding: 5px 12px; margin-bottom: 14px; letter-spacing: 1px; }
+  .hero-title { font-size: clamp(38px, 11vw, 56px); letter-spacing: 0.5px; margin-bottom: 12px; }
+  .hero-desc { font-size: 13.5px; line-height: 1.55; margin-bottom: 18px; max-width: 100%; }
+  .hero-btns { gap: 10px; margin-bottom: 22px; }
+  .hero-btns .btn-primary, .hero-btns .btn-outline { padding: 10px 20px; font-size: 13px; }
+  .hero-stats { flex-wrap: wrap; padding: 12px 14px; justify-content: center; gap: 8px; border-radius: 14px; }
   .hs-div { display: none; }
-  .hs-item { padding: 6px 14px; }
+  .hs-item { padding: 4px 10px; }
+  .hs-num { font-size: 24px; }
+  .hs-label { font-size: 9px; letter-spacing: 0.5px; }
+  .hero-scroll { display: none; }
 
   .about-grid { grid-template-columns: 1fr; }
   .ab-img2 { display: none; }
@@ -982,7 +975,9 @@ button { cursor: pointer; font-family: var(--fb); }
   .gal-item.gal-tall { grid-row: span 1; }
   .bmi-form { grid-template-columns: 1fr; }
   .hero-btns { flex-direction: column; }
-  .hero-stats { display: grid; grid-template-columns: 1fr 1fr; }
+  .hero-btns .btn-primary, .hero-btns .btn-outline { width: 100%; justify-content: center; }
+  .hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .hero-title { font-size: clamp(34px, 12vw, 46px); }
 }
 
 /* ══════════════════════════════════════
