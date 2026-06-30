@@ -148,6 +148,10 @@ button { cursor: pointer; font-family: var(--fb); }
 .torn-to-red { background: var(--black); }
 .torn-to-red svg path { fill: var(--red-dk); }
 
+/* White panel above -> red trial-cta below */
+.torn-white-to-red { background: var(--paper); }
+.torn-white-to-red svg path { fill: var(--red-dk); }
+
 /* Red trial-cta above -> dark contact below */
 .torn-from-red { background: var(--red-dk); }
 .torn-from-red svg path { fill: var(--dark); }
@@ -682,6 +686,56 @@ button { cursor: pointer; font-family: var(--fb); }
 .plan-note strong { color: #aaa; }
 .plan-note i { color: var(--red); }
 
+/* ── White panel variant — complements dark theme (per reference design) ── */
+.membership-light {
+  background: var(--paper);
+  padding: 70px 0;
+}
+.membership-light .sec-tag {
+  background: rgba(227,28,28,0.08);
+  border-color: rgba(227,28,28,0.25);
+}
+.membership-light .sec-sub { color: #6b6b75; }
+.membership-light .plan-card {
+  background: #ffffff;
+  border: 1px solid rgba(20,20,28,0.08);
+  box-shadow: 0 2px 14px rgba(20,20,28,0.05);
+}
+.membership-light .plan-card:hover {
+  box-shadow: 0 16px 36px rgba(20,20,28,0.12);
+}
+.membership-light .plan-popular {
+  border-color: rgba(227,28,28,0.5);
+  box-shadow: 0 0 36px rgba(227,28,28,0.12);
+}
+.membership-light .plan-head {
+  background: rgba(20,20,28,0.02);
+  border-bottom: 1px solid rgba(20,20,28,0.07);
+}
+.membership-light .plan-name { color: var(--paper-ink); }
+.membership-light .pp-num { color: var(--paper-ink); }
+.membership-light .pp-per { color: #9a9aa3; }
+.membership-light .plan-features li {
+  color: #4a4a54;
+  background: rgba(20,20,28,0.02);
+}
+.membership-light .plan-features li.pf-off { color: #c2c2c8; }
+.membership-light .plan-features li.pf-off i.fa-xmark { color: #d5d5da; }
+.membership-light .plan-btn {
+  background: rgba(20,20,28,0.05);
+  color: var(--paper-ink);
+  border-color: rgba(20,20,28,0.1);
+}
+.membership-light .plan-btn:hover { background: rgba(20,20,28,0.09); }
+.membership-light .plan-btn-red { background: var(--red); color: #fff; border-color: var(--red); }
+.membership-light .plan-btn-red:hover { background: var(--red-dk); }
+.membership-light .plan-note {
+  background: #ffffff;
+  border: 1px solid rgba(20,20,28,0.08);
+  color: #6b6b75;
+}
+.membership-light .plan-note strong { color: var(--paper-ink); }
+
 /* ══════════════════════════════════════
    TRAINERS
 ══════════════════════════════════════ */
@@ -776,6 +830,21 @@ button { cursor: pointer; font-family: var(--fb); }
 }
 .lb-close:hover { background: var(--red); }
 
+/* ── White panel variant — complements dark theme (per reference design) ── */
+.gallery-light {
+  background: var(--paper);
+  padding: 70px 0;
+}
+.gallery-light .sec-tag {
+  background: rgba(227,28,28,0.08);
+  border-color: rgba(227,28,28,0.25);
+}
+.gallery-light .gal-item {
+  border: 1px solid rgba(20,20,28,0.08);
+  box-shadow: 0 4px 18px rgba(20,20,28,0.07);
+}
+.gallery-light .gal-overlay { background: rgba(20,20,28,0.45); }
+
 /* ══════════════════════════════════════
    TESTIMONIALS
 ══════════════════════════════════════ */
@@ -858,6 +927,29 @@ button { cursor: pointer; font-family: var(--fb); }
 .br-bar-labels { display: flex; justify-content: space-between; font-size: 10px; color: #555; font-family: var(--fi); }
 .br-advice { font-size: 13px; color: #888; line-height: 1.7; margin-bottom: 16px; font-family: var(--fi); }
 .br-cta { width: 100%; justify-content: center; }
+
+/* ── White panel variant — complements dark theme (per reference design) ── */
+.bmi-light {
+  background: var(--paper);
+  padding: 70px 0;
+}
+.bmi-light .sec-tag {
+  background: rgba(227,28,28,0.08);
+  border-color: rgba(227,28,28,0.25);
+}
+.bmi-body-light { color: #5c5c66; }
+.bmi-light .bmi-tip {
+  background: #ffffff;
+  border: 1px solid rgba(20,20,28,0.08);
+  color: #4a4a54;
+}
+/* BMI calc card stays dark — floats as a contrast card on the white panel,
+   matching the reference design's "tool card on light bg" pattern */
+.bmi-light .bmi-calc {
+  background: var(--dark2);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 20px 50px rgba(20,20,28,0.18);
+}
 
 /* ══════════════════════════════════════
    TRIAL CTA
@@ -1021,7 +1113,7 @@ button { cursor: pointer; font-family: var(--fb); }
   .torn-divider { height: 26px; }
   .torn-divider svg { height: 36px; }
   .script-accent { font-size: 22px; margin-bottom: 0; }
-  .why-light { padding: 50px 0; }
+  .why-light, .membership-light, .gallery-light, .bmi-light { padding: 50px 0; }
 
   /* Hero — compact everything so the gym photo stays visible */
   .hero { min-height: 100vh; }
