@@ -113,48 +113,47 @@ button { cursor: pointer; font-family: var(--fb); }
 
 /* ══════════════════════════════════════
    TORN-PAPER DIVIDERS — signature element
-   Brush/torn edge between dark & white panels.
-   Base color = the section ABOVE the divider (what we're leaving).
-   Path fill   = the section BELOW the divider (what we're entering).
+   Diagonal slash separators — GymFit reference style.
+   Clean skewed lines between sections, not torn paper.
 ══════════════════════════════════════ */
-.torn-divider {
+
+/* Base diagonal separator */
+.diag-sep {
   position: relative;
-  width: 100%;
   height: 70px;
-  line-height: 0;
-  margin: 0;
-  overflow: hidden;
-}
-.torn-divider svg {
   width: 100%;
-  height: 80px;
-  display: block;
+  overflow: hidden;
+  z-index: 1;
 }
-/* Default: dark hero -> dark about section */
-.torn-divider-down { background: var(--black); }
-.torn-divider-down svg path { fill: var(--dark); }
-.torn-divider-up   { background: var(--dark); }
-.torn-divider-up   svg path { fill: var(--dark2); }
+.diag-sep::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -5%; right: -5%;
+  height: 100%;
+  transform-origin: top left;
+}
 
-/* Dark above -> white panel below */
-.torn-to-white { background: var(--dark); }
-.torn-to-white svg path { fill: var(--paper); }
+/* Dark → Dark (hero to about, slight shade change) */
+.diag-dark-to-dark { background: var(--black); }
+.diag-dark-to-dark::before { background: var(--dark); transform: skewY(-2deg) translateY(30px); }
 
-/* White panel above -> dark below */
-.torn-to-dark { background: var(--paper); }
-.torn-to-dark svg path { fill: var(--dark); }
+/* Dark → White panel */
+.diag-dark-to-white { background: var(--dark); }
+.diag-dark-to-white::before { background: var(--paper); transform: skewY(-2.5deg) translateY(20px); }
 
-/* Black above -> red trial-cta below */
-.torn-to-red { background: var(--black); }
-.torn-to-red svg path { fill: var(--red-dk); }
+/* White panel → Dark (inverted — slash goes other way) */
+.diag-white-to-dark { background: var(--paper); }
+.diag-white-to-dark::before { background: var(--dark); transform: skewY(2.5deg) translateY(20px); }
+.diag-white-to-dark.diag-up::before { transform: skewY(-2.5deg) translateY(20px); }
 
-/* White panel above -> red trial-cta below */
-.torn-white-to-red { background: var(--paper); }
-.torn-white-to-red svg path { fill: var(--red-dk); }
+/* White panel → Red CTA */
+.diag-white-to-red { background: var(--paper); }
+.diag-white-to-red::before { background: var(--red-dk); transform: skewY(-2.5deg) translateY(20px); }
 
-/* Red trial-cta above -> dark contact below */
-.torn-from-red { background: var(--red-dk); }
-.torn-from-red svg path { fill: var(--dark); }
+/* Red CTA → Dark contact */
+.diag-red-to-dark { background: var(--red-dk); }
+.diag-red-to-dark::before { background: var(--dark); transform: skewY(2.5deg) translateY(20px); }
+.diag-red-to-dark.diag-up::before { transform: skewY(-2.5deg) translateY(20px); }
 
 /* ── Glass card mixin ── */
 .glass-card {
@@ -354,79 +353,161 @@ button { cursor: pointer; font-family: var(--fb); }
   opacity: 0.4; pointer-events: none;
 }
 
+/* ══ HERO — Demo Fitness style ══ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+}
+
 .hero-content {
   position: relative; z-index: 2;
   width: 90%; max-width: 1200px; margin: 0 auto;
-  padding-top: 80px;
+  padding: 160px 0 40px;
 }
 
-.hero-badge {
-  display: inline-flex; align-items: center; gap: 7px;
-  background: rgba(227,28,28,0.12);
-  border: 1px solid rgba(227,28,28,0.35);
-  backdrop-filter: blur(8px);
-  color: #ff7070; padding: 6px 16px; border-radius: 50px;
-  font-family: var(--fi); font-size: 12px; font-weight: 600; letter-spacing: 1.5px;
-  text-transform: uppercase; margin-bottom: 24px;
-  animation: fadeDown 0.7s ease 0.2s both;
+/* Spaced-out eyebrow label like "BUILT" in reference */
+.hero-eyebrow {
+  font-family: var(--fi);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 10px;
+  animation: fadeDown 0.6s ease 0.2s both;
 }
 
+/* Giant bold condensed title */
 .hero-title {
+  margin-bottom: 0;
+  animation: slideRight 0.7s ease 0.35s both;
+}
+.ht-main {
+  display: block;
   font-family: var(--fh);
-  font-size: clamp(68px, 10vw, 130px);
-  line-height: 0.92;
+  font-size: clamp(72px, 11vw, 148px);
+  color: #fff;
+  line-height: 0.88;
   letter-spacing: 2px;
-  margin-bottom: 22px;
 }
-.ht-line1 {
-  display: block; color: #fff;
-  animation: slideRight 0.8s ease 0.4s both;
+/* Red italic sub-line exactly like "STRONGER. EVERY DAY." */
+.ht-sub {
+  display: block;
+  font-family: var(--fh);
+  font-size: clamp(26px, 3.8vw, 52px);
+  letter-spacing: 3px;
+  line-height: 1.1;
+  color: #fff;
+  margin-top: 6px;
 }
-.ht-line2 {
-  display: block; color: var(--red);
-  animation: slideRight 0.8s ease 0.6s both;
+.ht-sub em {
+  color: var(--red);
+  font-style: italic;
+  font-family: var(--fh);
+}
+
+/* Short red dash underline accent (exactly in reference) */
+.hero-accent-line {
+  width: 52px;
+  height: 3px;
+  background: var(--red);
+  margin: 16px 0 22px;
+  animation: fadeUp 0.5s ease 0.6s both;
 }
 
 .hero-desc {
-  font-size: 17px; color: rgba(255,255,255,0.72); line-height: 1.7;
-  margin-bottom: 34px; max-width: 500px;
-  animation: fadeUp 0.7s ease 0.8s both;
+  font-family: var(--fi);
+  font-size: 15px;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.7;
+  margin-bottom: 30px;
+  max-width: 420px;
+  animation: fadeUp 0.6s ease 0.75s both;
 }
 
+/* Buttons — outlined rect exactly like Demo Fitness */
 .hero-btns {
-  display: flex; gap: 14px; flex-wrap: wrap;
-  margin-bottom: 50px;
-  animation: fadeUp 0.7s ease 1s both;
+  display: flex; gap: 16px; flex-wrap: wrap;
+  animation: fadeUp 0.6s ease 0.9s both;
 }
+.btn-hero-primary {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 30px;
+  border: 2px solid #fff;
+  color: #fff;
+  background: transparent;
+  font-family: var(--fi);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background .2s, color .2s, border-color .2s;
+}
+.btn-hero-primary:hover { background: var(--red); border-color: var(--red); }
+.btn-hero-outline {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 30px;
+  border: 2px solid rgba(255,255,255,0.35);
+  color: rgba(255,255,255,0.8);
+  background: transparent;
+  font-family: var(--fi);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: border-color .2s, color .2s;
+}
+.btn-hero-outline:hover { border-color: var(--red); color: #fff; }
 
-.hero-stats {
-  display: flex; align-items: center;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-radius: 20px; padding: 18px 28px;
-  width: fit-content;
-  animation: fadeUp 0.7s ease 1.2s both;
+/* Feature rows (mobile reference — 3 rows below hero image) */
+.hero-features {
+  position: relative; z-index: 2;
+  width: 100%;
+  background: rgba(0,0,0,0.72);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(255,255,255,0.08);
+  display: none; /* hidden on desktop, shown on mobile */
 }
-.hs-item { text-align: center; padding: 0 22px; }
+.hf-item {
+  display: flex; align-items: center; gap: 16px;
+  padding: 16px 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.hf-item:last-child { border-bottom: none; }
+.hf-icon {
+  width: 44px; height: 44px; flex-shrink: 0;
+  border: 1.5px solid var(--red);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--red); font-size: 18px;
+}
+.hf-text { flex: 1; }
+.hf-text strong { display: block; font-family: var(--fi); font-size: 12px; font-weight: 700; letter-spacing: 1.5px; color: #fff; margin-bottom: 2px; }
+.hf-text span { font-family: var(--fi); font-size: 12px; color: rgba(255,255,255,0.55); }
+.hf-arr { color: var(--red); font-size: 14px; }
+
+/* Stats bar at bottom of hero */
+.hero-stats-bar {
+  position: relative; z-index: 2;
+  display: flex; align-items: center;
+  background: rgba(8,8,16,0.85);
+  border-top: 1px solid rgba(255,255,255,0.07);
+  backdrop-filter: blur(20px);
+  padding: 18px 5%;
+}
+.hs-item { text-align: center; padding: 0 28px; }
 .hs-num {
   display: block;
   font-family: var(--fh); font-size: 36px; color: #fff; line-height: 1;
 }
-.hs-label { font-size: 11px; color: #777; text-transform: uppercase; letter-spacing: 1px; }
-.hs-div { width: 1px; height: 38px; background: rgba(255,255,255,0.12); flex-shrink: 0; }
-
-.hero-scroll {
-  position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
-  z-index: 2;
-}
-.hero-scroll span {
-  display: block; width: 1px; height: 50px;
-  background: linear-gradient(to bottom, transparent, var(--red));
-  margin: 0 auto;
-  animation: scrollPulse 2s ease infinite;
-}
+.hs-label { font-size: 10px; color: #666; text-transform: uppercase; letter-spacing: 1.5px; margin-top: 2px; display: block; }
+.hs-div { width: 1px; height: 36px; background: rgba(255,255,255,0.1); flex-shrink: 0; }
 
 @keyframes slideRight { from { opacity:0; transform:translateX(-44px); } to { opacity:1; transform:none; } }
 @keyframes fadeUp    { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:none; } }
@@ -1109,26 +1190,31 @@ button { cursor: pointer; font-family: var(--fb); }
   .nav-cta { display: none; }
   .hamburger { display: flex; }
 
-  /* New typography/divider elements — scale down on mobile */
-  .torn-divider { height: 44px; }
-  .torn-divider svg { height: 54px; }
-  .script-accent { font-size: 22px; margin-bottom: 0; }
-  .why-light, .membership-light, .gallery-light, .bmi-light { padding: 50px 0; }
+  /* Diagonal separators — slightly less tall on mobile */
+  .diag-sep { height: 44px; }
 
-  /* Hero — compact everything so the gym photo stays visible */
-  .hero { min-height: 100vh; }
-  .hero-content { padding-top: 64px; }
-  .hero-badge { font-size: 10px; padding: 5px 12px; margin-bottom: 14px; letter-spacing: 1px; }
-  .hero-title { font-size: clamp(38px, 11vw, 56px); letter-spacing: 0.5px; margin-bottom: 12px; }
-  .hero-desc { font-size: 13.5px; line-height: 1.55; margin-bottom: 18px; max-width: 100%; }
-  .hero-btns { gap: 10px; margin-bottom: 22px; }
-  .hero-btns .btn-primary, .hero-btns .btn-outline { padding: 10px 20px; font-size: 13px; }
-  .hero-stats { flex-wrap: wrap; padding: 12px 14px; justify-content: center; gap: 8px; border-radius: 14px; }
+  /* Hero mobile — feature rows visible, stats bar 2-col grid */
+  .hero-features { display: block; }
+  .hero-stats-bar { flex-wrap: wrap; padding: 12px 5%; justify-content: center; gap: 6px; }
+  .hs-div { display: none; }
+  .hs-item { padding: 6px 14px; }
+  .hs-num { font-size: 26px; }
+
+  /* Hero mobile — Demo Fitness style */
+  .hero { min-height: 100svh; justify-content: flex-end; }
+  .hero-content { padding: 120px 5% 28px; }
+  .hero-eyebrow { font-size: 11px; letter-spacing: 4px; margin-bottom: 8px; }
+  .ht-main { font-size: clamp(52px, 14vw, 80px); }
+  .ht-sub { font-size: clamp(20px, 5.5vw, 32px); letter-spacing: 2px; }
+  .hero-accent-line { width: 36px; height: 2px; margin: 12px 0 16px; }
+  .hero-desc { font-size: 13px; margin-bottom: 22px; }
+  .hero-btns { gap: 10px; }
+  .btn-hero-primary, .btn-hero-outline { padding: 12px 22px; font-size: 11px; letter-spacing: 1.5px; }
+  .hero-stats-bar { padding: 12px 5%; }
   .hs-div { display: none; }
   .hs-item { padding: 4px 10px; }
-  .hs-num { font-size: 24px; }
+  .hs-num { font-size: 22px; }
   .hs-label { font-size: 9px; letter-spacing: 0.5px; }
-  .hero-scroll { display: none; }
 
   .about-grid { grid-template-columns: 1fr; }
   .ab-img2 { display: none; }
@@ -1160,9 +1246,11 @@ button { cursor: pointer; font-family: var(--fb); }
   .gal-item.gal-tall { grid-row: span 1; }
   .bmi-form { grid-template-columns: 1fr; }
   .hero-btns { flex-direction: column; }
-  .hero-btns .btn-primary, .hero-btns .btn-outline { width: 100%; justify-content: center; }
-  .hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-  .hero-title { font-size: clamp(34px, 12vw, 46px); }
+  .btn-hero-primary, .btn-hero-outline { width: 100%; justify-content: center; }
+  .ht-main { font-size: clamp(44px, 14vw, 64px); }
+  .ht-sub { font-size: clamp(17px, 5vw, 26px); }
+  .hero-stats-bar { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 10px; }
+  .hs-item { padding: 6px; }
 }
 
 /* ══════════════════════════════════════
