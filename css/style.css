@@ -120,14 +120,14 @@ button { cursor: pointer; font-family: var(--fb); }
 .torn-divider {
   position: relative;
   width: 100%;
-  height: 44px;
+  height: 70px;
   line-height: 0;
   margin: 0;
   overflow: hidden;
 }
 .torn-divider svg {
   width: 100%;
-  height: 60px;
+  height: 80px;
   display: block;
 }
 /* Default: dark hero -> dark about section */
@@ -1110,8 +1110,8 @@ button { cursor: pointer; font-family: var(--fb); }
   .hamburger { display: flex; }
 
   /* New typography/divider elements — scale down on mobile */
-  .torn-divider { height: 26px; }
-  .torn-divider svg { height: 36px; }
+  .torn-divider { height: 44px; }
+  .torn-divider svg { height: 54px; }
   .script-accent { font-size: 22px; margin-bottom: 0; }
   .why-light, .membership-light, .gallery-light, .bmi-light { padding: 50px 0; }
 
