@@ -327,187 +327,62 @@ button { cursor: pointer; font-family: var(--fb); }
 .nav-mobile-panel .nm-link::after { display: none; }
 
 /* ══════════════════════════════════════
-   HERO
+   HERO — full bleed custom images
+   Desktop: landscape image | Mobile: portrait image
+   Only the CTA button overlays the image
 ══════════════════════════════════════ */
 .hero {
-  position: relative; height: 100vh; min-height: 700px;
-  display: flex; align-items: center;
-  overflow: hidden;
-}
-.hero-bg { position: absolute; inset: 0; }
-.hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
-.hero-overlay {
-  position: absolute; inset: 0;
-  background: linear-gradient(135deg,
-    rgba(8,8,16,0.93) 0%,
-    rgba(8,8,16,0.72) 55%,
-    rgba(227,28,28,0.2) 100%
-  );
-}
-
-/* Noise grain texture */
-.hero-bg::after {
-  content: '';
-  position: absolute; inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-  opacity: 0.4; pointer-events: none;
-}
-
-/* ══ HERO — Demo Fitness style ══ */
-.hero {
   position: relative;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  width: 100%;
+  line-height: 0; /* prevent gap under inline img */
   overflow: hidden;
+  background: #000;
 }
 
-.hero-content {
-  position: relative; z-index: 2;
-  width: 90%; max-width: 1200px; margin: 0 auto;
-  padding: 160px 0 40px;
-}
-
-/* Spaced-out eyebrow label like "BUILT" in reference */
-.hero-eyebrow {
-  font-family: var(--fi);
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 6px;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.6);
-  margin-bottom: 10px;
-  animation: fadeDown 0.6s ease 0.2s both;
-}
-
-/* Giant bold condensed title */
-.hero-title {
-  margin-bottom: 0;
-  animation: slideRight 0.7s ease 0.35s both;
-}
-.ht-main {
+/* Both images stack — JS-free responsive switching via CSS */
+.hero-img {
+  width: 100%;
+  height: auto;
   display: block;
-  font-family: var(--fh);
-  font-size: clamp(72px, 11vw, 148px);
-  color: #fff;
-  line-height: 0.88;
-  letter-spacing: 2px;
+  object-fit: cover;
 }
-/* Red italic sub-line exactly like "STRONGER. EVERY DAY." */
-.ht-sub {
-  display: block;
-  font-family: var(--fh);
-  font-size: clamp(26px, 3.8vw, 52px);
-  letter-spacing: 3px;
-  line-height: 1.1;
-  color: #fff;
-  margin-top: 6px;
-}
-.ht-sub em {
-  color: var(--red);
-  font-style: italic;
-  font-family: var(--fh);
+/* Desktop image: show on ≥769px */
+.hero-img-desktop { display: block; }
+/* Mobile image: hidden on desktop */
+.hero-img-mobile  { display: none;  }
+
+/* CTA button — absolute, bottom-left, matching Demo Fitness reference position */
+.hero-cta-wrap {
+  position: absolute;
+  bottom: 10%;
+  left: 6%;
+  z-index: 10;
 }
 
-/* Short red dash underline accent (exactly in reference) */
-.hero-accent-line {
-  width: 52px;
-  height: 3px;
-  background: var(--red);
-  margin: 16px 0 22px;
-  animation: fadeUp 0.5s ease 0.6s both;
-}
-
-.hero-desc {
-  font-family: var(--fi);
-  font-size: 15px;
-  color: rgba(255,255,255,0.65);
-  line-height: 1.7;
-  margin-bottom: 30px;
-  max-width: 420px;
-  animation: fadeUp 0.6s ease 0.75s both;
-}
-
-/* Buttons — outlined rect exactly like Demo Fitness */
-.hero-btns {
-  display: flex; gap: 16px; flex-wrap: wrap;
-  animation: fadeUp 0.6s ease 0.9s both;
-}
+/* Primary hero CTA — outlined rect style (Demo Fitness reference) */
 .btn-hero-primary {
-  display: inline-flex; align-items: center; gap: 10px;
-  padding: 14px 30px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 34px;
   border: 2px solid #fff;
   color: #fff;
   background: transparent;
   font-family: var(--fi);
   font-size: 13px;
   font-weight: 700;
-  letter-spacing: 2px;
+  letter-spacing: 2.5px;
   text-transform: uppercase;
   text-decoration: none;
-  transition: background .2s, color .2s, border-color .2s;
+  cursor: pointer;
+  transition: background .22s, border-color .22s, color .22s, box-shadow .22s;
 }
-.btn-hero-primary:hover { background: var(--red); border-color: var(--red); }
-.btn-hero-outline {
-  display: inline-flex; align-items: center; gap: 10px;
-  padding: 14px 30px;
-  border: 2px solid rgba(255,255,255,0.35);
-  color: rgba(255,255,255,0.8);
-  background: transparent;
-  font-family: var(--fi);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  text-decoration: none;
-  transition: border-color .2s, color .2s;
+.btn-hero-primary:hover {
+  background: var(--red);
+  border-color: var(--red);
+  box-shadow: 0 6px 24px var(--red-glow);
 }
-.btn-hero-outline:hover { border-color: var(--red); color: #fff; }
-
-/* Feature rows (mobile reference — 3 rows below hero image) */
-.hero-features {
-  position: relative; z-index: 2;
-  width: 100%;
-  background: rgba(0,0,0,0.72);
-  backdrop-filter: blur(12px);
-  border-top: 1px solid rgba(255,255,255,0.08);
-  display: none; /* hidden on desktop, shown on mobile */
-}
-.hf-item {
-  display: flex; align-items: center; gap: 16px;
-  padding: 16px 24px;
-  border-bottom: 1px solid rgba(255,255,255,0.07);
-}
-.hf-item:last-child { border-bottom: none; }
-.hf-icon {
-  width: 44px; height: 44px; flex-shrink: 0;
-  border: 1.5px solid var(--red);
-  border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--red); font-size: 18px;
-}
-.hf-text { flex: 1; }
-.hf-text strong { display: block; font-family: var(--fi); font-size: 12px; font-weight: 700; letter-spacing: 1.5px; color: #fff; margin-bottom: 2px; }
-.hf-text span { font-family: var(--fi); font-size: 12px; color: rgba(255,255,255,0.55); }
-.hf-arr { color: var(--red); font-size: 14px; }
-
-/* Stats bar at bottom of hero */
-.hero-stats-bar {
-  position: relative; z-index: 2;
-  display: flex; align-items: center;
-  background: rgba(8,8,16,0.85);
-  border-top: 1px solid rgba(255,255,255,0.07);
-  backdrop-filter: blur(20px);
-  padding: 18px 5%;
-}
-.hs-item { text-align: center; padding: 0 28px; }
-.hs-num {
-  display: block;
-  font-family: var(--fh); font-size: 36px; color: #fff; line-height: 1;
-}
-.hs-label { font-size: 10px; color: #666; text-transform: uppercase; letter-spacing: 1.5px; margin-top: 2px; display: block; }
-.hs-div { width: 1px; height: 36px; background: rgba(255,255,255,0.1); flex-shrink: 0; }
+.btn-hero-primary i { font-size: 13px; }
 
 @keyframes slideRight { from { opacity:0; transform:translateX(-44px); } to { opacity:1; transform:none; } }
 @keyframes fadeUp    { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:none; } }
@@ -1193,28 +1068,19 @@ button { cursor: pointer; font-family: var(--fb); }
   /* Diagonal separators — slightly less tall on mobile */
   .diag-sep { height: 44px; }
 
-  /* Hero mobile — feature rows visible, stats bar 2-col grid */
-  .hero-features { display: block; }
-  .hero-stats-bar { flex-wrap: wrap; padding: 12px 5%; justify-content: center; gap: 6px; }
-  .hs-div { display: none; }
-  .hs-item { padding: 6px 14px; }
-  .hs-num { font-size: 26px; }
-
-  /* Hero mobile — Demo Fitness style */
-  .hero { min-height: 100svh; justify-content: flex-end; }
-  .hero-content { padding: 120px 5% 28px; }
-  .hero-eyebrow { font-size: 11px; letter-spacing: 4px; margin-bottom: 8px; }
-  .ht-main { font-size: clamp(52px, 14vw, 80px); }
-  .ht-sub { font-size: clamp(20px, 5.5vw, 32px); letter-spacing: 2px; }
-  .hero-accent-line { width: 36px; height: 2px; margin: 12px 0 16px; }
-  .hero-desc { font-size: 13px; margin-bottom: 22px; }
-  .hero-btns { gap: 10px; }
-  .btn-hero-primary, .btn-hero-outline { padding: 12px 22px; font-size: 11px; letter-spacing: 1.5px; }
-  .hero-stats-bar { padding: 12px 5%; }
-  .hs-div { display: none; }
-  .hs-item { padding: 4px 10px; }
-  .hs-num { font-size: 22px; }
-  .hs-label { font-size: 9px; letter-spacing: 0.5px; }
+  /* Hero — swap to mobile portrait image */
+  .hero-img-desktop { display: none; }
+  .hero-img-mobile  { display: block; }
+  /* CTA button — repositioned for mobile portrait layout */
+  .hero-cta-wrap {
+    bottom: 7%;
+    left: 5%;
+  }
+  .btn-hero-primary {
+    padding: 12px 24px;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+  }
 
   .about-grid { grid-template-columns: 1fr; }
   .ab-img2 { display: none; }
@@ -1245,12 +1111,9 @@ button { cursor: pointer; font-family: var(--fb); }
   .gallery-grid { grid-template-columns: 1fr; }
   .gal-item.gal-tall { grid-row: span 1; }
   .bmi-form { grid-template-columns: 1fr; }
-  .hero-btns { flex-direction: column; }
-  .btn-hero-primary, .btn-hero-outline { width: 100%; justify-content: center; }
-  .ht-main { font-size: clamp(44px, 14vw, 64px); }
-  .ht-sub { font-size: clamp(17px, 5vw, 26px); }
-  .hero-stats-bar { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 10px; }
-  .hs-item { padding: 6px; }
+  /* Hero CTA full width on very small screens */
+  .btn-hero-primary { width: calc(100% - 10%); justify-content: center; }
+  .hero-cta-wrap { left: 5%; right: 5%; }
 }
 
 /* ══════════════════════════════════════
